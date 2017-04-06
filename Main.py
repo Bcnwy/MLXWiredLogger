@@ -14,7 +14,7 @@ if __name__ == '__main__':
     serial = serial.Serial(port=_Port, baudrate=_Baudrate)
     print _file
     # make file
-    with open(_file, 'wb') as csvFile:
+    with open(_file, 'ab') as csvFile:
         writer = csv.writer(csvFile, dialect='excel')
         # write a new row the the csv file
         header = 'Sensor', 'Object', 'Ambient', 'Distance', 'Time'
