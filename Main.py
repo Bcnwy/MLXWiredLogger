@@ -4,8 +4,8 @@ import serial
 import csv
 
 # serial port parameters
-_Port = 'COM5'
-_Baudrate = 460800
+_Port = 'COM6'
+_Baudrate = 57600
 # path = local root
 _file = ("{}-MLX.csv".format(datetime.now().date()))
 
@@ -25,10 +25,10 @@ if __name__ == '__main__':
     # start of EPOCH time
     startTime = time()
     i = 0
-    while i < 50:
-        rTime = time() - startTime  # get running time
-        read = serial.readline().strip()  # Read data
+    while 1:
 
+        read = serial.readline().strip()  # Read data
+        rTime = time() - startTime  # get running time
         # format the sensor data
         d = read.split(',')
         d += {rTime.__str__()}
