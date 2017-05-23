@@ -4,6 +4,8 @@ import serial.tools.list_ports
 import serial
 import sys
 import csv
+import os
+import json
 
 _calFile = "cal.txt"
 # serial port parameters
@@ -28,18 +30,16 @@ class MLX:
 
     @staticmethod
     def calibrate(self):
-        for i in range ( 0, 3 ):
+        global temp
+        for i in range(1,40 ):
             try:
-                read = self.serial.readline ( ).strip ( )  # Read data
+                r = self.serial.readline().strip()  # Read data
+                read = json.loads(r)
             except:
                 pass
-            d = read.split(',')
-            sensor = d[0][1]
-            temp[sensor] = d[1]
-        print temp
+            temp[read['Sensor']] = read['obj']
 
-    def get_temp_arr(self):
-        return [self.temp]
+        print temp
 
 
 if __name__ == '__main__':
@@ -51,8 +51,8 @@ if __name__ == '__main__':
     csvFile.close()
     # start of EPOCH time
     startTime = time()
+    mlx = MLX()
     while 1:
-        mlx = MLX()
+        rTime = time() - startTime  # get running tim
         mlx.calibrate()
-        rTime = time() - startTime  # get running time
     serial.close()
